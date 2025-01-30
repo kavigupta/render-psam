@@ -9,7 +9,7 @@ setuptools.setup(
     description="Wrapper around logomaker to easily render PSAMs in a variety of ways.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/kavigupta/render_psam",
+    url="https://github.com/kavigupta/render-psam",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3.9",
