@@ -1,6 +1,7 @@
 import unittest
 from matplotlib import pyplot as plt
 import numpy as np
+from parameterized import parameterized
 
 from render_psam import render_psam
 
@@ -17,7 +18,7 @@ def matplotlib_to_array(fig):
     return result
 
 
-class CreatePSAM(unittest.TestCase):
+class CreatePSAMTests(unittest.TestCase):
     def check(self, name):
         array_contents = matplotlib_to_array(plt.gcf())
         output_path = f"testing_output/{name}.png"
@@ -27,7 +28,18 @@ class CreatePSAM(unittest.TestCase):
         else:
             plt.imsave(output_path, array_contents)
 
-    def test_basic_normalized(self):
+    def ensure_is_testing(self):
+        if not is_testing:
+            raise ValueError("This test is not running in testing mode.")
+
+    @parameterized.expand(
+        [
+            ("raw",),
+            ("normalized",),
+            ("info",),
+        ]
+    )
+    def test_basic_mode(self, mode):
         psam = np.array(
             [
                 [1, 0, 0, 0],
@@ -36,5 +48,5 @@ class CreatePSAM(unittest.TestCase):
                 [0, 1, 0, 1],
             ]
         )
-        render_psam(psam, psam_mode="normalized")
-        self.check("basic_normalized")
+        render_psam(psam, psam_mode=mode)
+        self.check("basic_" + mode)
