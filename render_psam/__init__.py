@@ -7,24 +7,20 @@ import pandas as pd
 def render_psam(psam, psam_mode="normalized", ax=None, **kwargs):
     """
     Render a PSAM as a LogoMaker logo. Any NaNs in the PSAM will be replaced with near-0 values
-        so that they don't cause the LogoMaker to crash. This means that if you provide an
-        all-NaN PSAM, you'll get a uniform logo
+    so that they don't cause the LogoMaker to crash. This means that if you provide an
+    all-NaN PSAM, you'll get a uniform logo
 
-    Parameters
-    ----------
-    psam : np.ndarray
-        The PSAM to render. Shape (L, 4).
-    psam_mode : str
-        One of "raw", "normalized", or "info".
-            - "raw" means to plot the raw PSAM
-            - "normalized" means to first ensure that the PSAM sums to 1
-                at each position, and then plot the result.
-            - "info" means to treat the PSAM as a probability distribution
-                over nucleotides at each position, and then plot the
-                `sequence logo` by plotting a PSAM that sums to 2 - H(p)
-                at each position.
-    ax : matplotlib.Axis
-        The axis to plot on. If None, use the current axis.
+    :param psam: The PSAM to render. Shape (L, 4).
+    :param psam_mode: One of "raw", "normalized", or "info".
+        * "raw" means to plot the raw PSAM
+        * "normalized" means to first ensure that the PSAM sums to 1
+        at each position, and then plot the result.
+        * "info" means to treat the PSAM as a probability distribution
+        over nucleotides at each position, and then plot the
+        ``sequence logo`` by plotting a PSAM that sums to 2 - H(p)
+        at each position.
+    :param ax: The axis to plot on. If None, use the current axis.
+    :param kwargs: Additional keyword arguments to pass to logomaker.Logo
     """
     psam = np.array(psam)
     assert len(psam.shape) == 2 and psam.shape[1] == 4, str(psam.shape)
@@ -66,32 +62,22 @@ def render_psams(
     **kwargs,
 ):
     """
-    Render several PSAMs in a grid. The grid will have `ncols` columns, and as many rows
-        as necessary to fit all the PSAMs.
+    Render several PSAMs in a grid. The grid will have ``ncols`` columns, and as many rows
+    as necessary to fit all the PSAMs.
 
-    Each PSAM will be rendered using `render_psam`, and the `kwargs` will be passed to it.
-        The canvas for each PSAM will be a `width`-inch wide by `1.6`-inch tall figure.
+    Each PSAM will be rendered using ``render_psam``, and the ``kwargs`` will be passed to it.
+    The canvas for each PSAM will be a ``width``-inch wide by ``1.6``-inch tall figure.
 
-    Parameters
-    ----------
-    psams : list of np.ndarray
-        The PSAMs to render. Each PSAM should be a 2D array of shape (L, 4).
-    names : list of str
-        The names of the PSAMs. These will be used as the titles of the subplots.
-    ncols : int
-        The number of columns in the grid.
-    width : float
-        The width of each subplot, in inches.
-    figure_kwargs : dict
-        The keyword arguments to pass to `plt.figure`.
-    axes_mode : str
-        One of "completely_blank" or "just_y". If "completely_blank", then the axis will
-            be completely blank, with no ticks or labels. If "just_y", then the axis will
-            be blank except for the y-axis.
-    same_ylim : bool
-        If True, then all the subplots will have the same y-axis limits.
-    **kwargs
-        The keyword arguments to pass to `render_psam`.
+    :param psams: The PSAMs to render. Each PSAM should be a 2D array of shape (L, 4).
+    :param names: The names of the PSAMs. These will be used as the titles of the subplots.
+    :param ncols: The number of columns in the grid.
+    :param width: The width of each subplot, in inches.
+    :param figure_kwargs: The keyword arguments to pass to ``plt.figure``.
+    :param axes_mode: One of "completely_blank" or "just_y". If "completely_blank", then the axis will
+        be completely blank, with no ticks or labels. If "just_y", then the axis will
+        be blank except for the y-axis.
+    :param same_ylim: If True, then all the subplots will have the same y-axis limits.
+    :param kwargs: The keyword arguments to pass to ``render_psam``.
     """
     if figure_kwargs is None:
         figure_kwargs = {}
@@ -123,6 +109,12 @@ def render_psams(
 
 
 def clean(ax, *, simplified=False):
+    """
+    Clean up an axis by removing the top and right spines, and optionally the left and bottom spines.
+
+    :param ax: The axis to clean.
+    :param simplified: If True, then also remove the left and bottom spines.
+    """
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["bottom"].set_visible(False)
