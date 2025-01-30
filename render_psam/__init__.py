@@ -60,7 +60,7 @@ def render_psams(
     names,
     ncols=1,
     width=5,
-    figure_kwargs=dict(),
+    figure_kwargs=None,
     axes_mode="completely_blank",
     same_ylim=False,
     **kwargs,
@@ -93,6 +93,8 @@ def render_psams(
     **kwargs
         The keyword arguments to pass to `render_psam`.
     """
+    if figure_kwargs is None:
+        figure_kwargs = {}
     assert len(names) == len(psams)
     grid_size = [(len(psams) + ncols - 1) // ncols, ncols]
     _, axs = plt.subplots(
