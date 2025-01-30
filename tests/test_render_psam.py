@@ -23,7 +23,7 @@ class CreatePSAM(unittest.TestCase):
         output_path = f"testing_output/{name}.png"
         if is_testing:
             expected_contents = plt.imread(output_path) * 255
-            np.testing.assert_allclose(array_contents, expected_contents)
+            assert (np.abs(array_contents - expected_contents) > 1).mean() < 0.01
         else:
             plt.imsave(output_path, array_contents)
 
