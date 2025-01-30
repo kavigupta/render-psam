@@ -7,7 +7,7 @@ from parameterized import parameterized
 
 from render_psam import render_psam, render_psams
 
-is_testing = False
+is_testing = True
 
 
 def matplotlib_to_array(fig):
