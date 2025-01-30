@@ -1,6 +1,7 @@
 import unittest
-from matplotlib import pyplot as plt
+
 import numpy as np
+from matplotlib import pyplot as plt
 from parameterized import parameterized
 
 from render_psam import render_psam
